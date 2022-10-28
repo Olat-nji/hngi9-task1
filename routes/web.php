@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json(["slackUsername"=> 'Olatunji_', "backend"=> true, "age"=> 22, "bio"=> 'I’m a software engineer who loves building scalable, well-engineered products that can handle both the test of time and technological advancements.' ],200);
+    return response()->json(["slackUsername"=> 'Olatunji_', "backend"=> true, "age"=> 22, "bio"=> "I’m a software engineer who loves building scalable, well-engineered products that can handle both the test of time and technological advancements." ],200);
 });
