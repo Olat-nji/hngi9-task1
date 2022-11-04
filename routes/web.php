@@ -21,19 +21,16 @@ Route::post('/', function (Request $request) {
     Cache::rememberForever('response', function () use ($request) {
         return $request->all();
     });
-    switch ($request->operation_type) {
-        case 'addition':
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
-            break;
-        case 'subtraction':
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => $request->operation_type], 200);
-            break;
-        case 'multiplication':
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => $request->operation_type], 200);
-            break;
-        default:
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
-            break;
+    
+    if(strstr($request->operation_type,'*')){
+        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => '*'], 200);
+    }
+    if(strstr($request->operation_type,'+')){
+        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => '+'], 200);
+    }
+
+    if(strstr($request->operation_type,'-')){
+        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => '-'], 200);
     }
 });
 
