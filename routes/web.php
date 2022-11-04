@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return response()->json(["slackUsername"=> 'olayemi289', "backend"=> true, "age"=> 22, "bio"=> "I’m a software engineer who loves building scalable, well-engineered products that can handle both the test of time and technological advancements." ],200);
+Route::post('/', function (Request $request) {
+    switch ($request->operation_type) {
+        case 'addition':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+        case 'subtraction':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+        case 'multiplication':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+        default:
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+    }
 });
+
