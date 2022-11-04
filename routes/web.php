@@ -16,7 +16,7 @@ use Mockery\Generator\CachingGenerator;
 |
 */
 
-Route::post('/', function (Request $request) {
+Route::post('/task-2', function (Request $request) {
     Cache::forget('response');
     Cache::rememberForever('response', function () use ($request) {
         return $request->all();
