@@ -23,15 +23,15 @@ Route::post('/task-2', function (Request $request) {
     });
     if ($request->bonus) {
         if (strstr($request->operation_type, '*') || strstr($request->operation_type, 'product')|| strstr($request->operation_type, 'multiply')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => $request->operation_type], 200);
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => 'multiplication'], 200);
         }
        
         if (strstr($request->operation_type, '+') || strstr($request->operation_type, 'sum') || strstr($request->operation_type, 'add')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => 'addition'], 200);
         }
 
         if (strstr($request->operation_type, '-') || strstr($request->operation_type, 'difference') || strstr($request->operation_type, 'subtract') || strstr($request->operation_type, 'substract')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => $request->operation_type], 200);
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => 'subtraction'], 200);
         }
 
         
