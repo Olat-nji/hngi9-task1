@@ -21,19 +21,35 @@ Route::post('/task-2', function (Request $request) {
     Cache::rememberForever('response', function () use ($request) {
         return $request->all();
     });
-    
-    if(strstr($request->operation_type,'*')){
-        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => '*'], 200);
-    }
-    if(strstr($request->operation_type,'+')){
-        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => '+'], 200);
-    }
+    if ($request->bonus) {
+        if (strstr($request->operation_type, '*') || strstr($request->operation_type, 'product')) {
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => '*'], 200);
+        }
+        if (strstr($request->operation_type, '+') || strstr($request->operation_type, 'sum')) {
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => '+'], 200);
+        }
 
-    if(strstr($request->operation_type,'-')){
-        return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => '-'], 200);
+        if (strstr($request->operation_type, '-') || strstr($request->operation_type, 'difference')) {
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => '-'], 200);
+        }
+    }
+    switch ($request->operation_type) {
+        case 'addition':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+        case 'subtraction':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+        case 'multiplication':
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
+            
+        default:
+            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
+            break;
     }
 });
 
 Route::get('/', function (Request $request) {
-return    Cache::get('response');
+    return    Cache::get('response');
 });
