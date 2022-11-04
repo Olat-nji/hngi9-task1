@@ -22,26 +22,19 @@ Route::post('/task-2', function (Request $request) {
         return $request->all();
     });
     if ($request->bonus) {
-        if (strstr($request->operation_type, '*')) {
+        if (strstr($request->operation_type, '*') || strstr($request->operation_type, 'product')|| strstr($request->operation_type, 'multiply')) {
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => '*'], 200);
         }
-        if (strstr($request->operation_type, 'product')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => 'product'], 200);
-        }
-        if (strstr($request->operation_type, '+')) {
+       
+        if (strstr($request->operation_type, '+') || strstr($request->operation_type, 'sum') || strstr($request->operation_type, 'add')) {
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => '+'], 200);
         }
-        if (strstr($request->operation_type, 'sum')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => 'sum'], 200);
-        }
 
-        if (strstr($request->operation_type, '-')) {
+        if (strstr($request->operation_type, '-') || strstr($request->operation_type, 'difference') || strstr($request->operation_type, 'subtract') || strstr($request->operation_type, 'substract')) {
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => '-'], 200);
         }
 
-        if (strstr($request->operation_type, 'difference')) {
-            return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x - $request->y, 'operation_type' => 'difference'], 200);
-        }
+        
     }
     switch ($request->operation_type) {
         case 'addition':
@@ -53,7 +46,7 @@ Route::post('/task-2', function (Request $request) {
         case 'multiplication':
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x * $request->y, 'operation_type' => $request->operation_type], 200);
             break;
-
+            
         default:
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
             break;
