@@ -38,5 +38,7 @@ Route::post('/', function (Request $request) {
 });
 
 Route::get('/', function (Request $request) {
-    Cache::get('response');
+    Cache::rememberForever('response', function () use ($request) {
+        return $request->all();
+    });
 });
