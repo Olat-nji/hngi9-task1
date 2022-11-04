@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Mockery\Generator\CachingGenerator;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/', function (Request $request) {
+    Cache::forget('response');
+    Cache::rememberForever('response', function () use ($request) {
+        return $request->all();
+    });
     switch ($request->operation_type) {
         case 'addition':
             return response()->json(["slackUsername" => 'olayemi289', 'result' => $request->x + $request->y, 'operation_type' => $request->operation_type], 200);
@@ -31,3 +37,6 @@ Route::post('/', function (Request $request) {
     }
 });
 
+Route::get('/', function (Request $request) {
+    Cache::get('response');
+});
